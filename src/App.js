@@ -1,10 +1,11 @@
 import { Box, Button, CircularProgress, createTheme, CssBaseline, Grid, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
+import ListItemsSelector from './ListItemsSelector';
 
 const mdTheme = createTheme();
 
-const steps = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5', 'Step 6'];
+const steps = ['List items component', 'Step 2', 'Step 3', 'Step 4', 'Step 5', 'Step 6'];
 
 function App() {
   const [step, setStep] = useState(0);
@@ -43,9 +44,12 @@ function App() {
                   <Button sx={{ width: 150 }} variant='outlined' disabled={step === steps.length - 1} onClick={() => { setStep(step + 1); setLoading(true) }}>Next</Button>
                 </Grid>
               </Grid>
-              <Typography variant='subtitle1' sx={{ marginTop: 2 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et quam rhoncus, consectetur tortor a, scelerisque neque. Pellentesque consequat, ligula sed ullamcorper lacinia, leo felis commodo nisi, nec ornare tellus mi non ipsum. Phasellus felis sapien, ultricies vel tortor faucibus, egestas dignissim ante. Cras id metus a lorem semper auctor. Phasellus vitae magna arcu. Pellentesque rhoncus ultricies nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempor metus quis dolor consequat egestas. Nam egestas felis vel magna hendrerit, consequat rhoncus augue viverra. In vitae imperdiet est. Quisque eleifend velit et tristique ultricies.
-              </Typography>
+              {step === 0 && <ListItemsSelector items={steps} height={300} />}
+              {step > 0 &&
+                <Typography variant='subtitle1' sx={{ marginTop: 2 }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et quam rhoncus, consectetur tortor a, scelerisque neque. Pellentesque consequat, ligula sed ullamcorper lacinia, leo felis commodo nisi, nec ornare tellus mi non ipsum. Phasellus felis sapien, ultricies vel tortor faucibus, egestas dignissim ante. Cras id metus a lorem semper auctor. Phasellus vitae magna arcu. Pellentesque rhoncus ultricies nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempor metus quis dolor consequat egestas. Nam egestas felis vel magna hendrerit, consequat rhoncus augue viverra. In vitae imperdiet est. Quisque eleifend velit et tristique ultricies.
+                </Typography>
+              }
             </Grid>
           </Grid>
         </Box>
