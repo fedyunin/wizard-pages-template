@@ -5,7 +5,7 @@ import { useState } from "react";
 
 function ListItemsSelector(props) {
     const [items] = useState(props.items);
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState(props.selectedItems);
     const [searchQuery, setSearchQuery] = useState('');
     const [showSelectedOnly, setShowSeletedOnly] = useState(false);
 
@@ -20,6 +20,13 @@ function ListItemsSelector(props) {
         }
 
         setSelectedItems(newSelectedItems);
+        props.onSelectItems(newSelectedItems)
+    }
+
+    const clearAll = () => {
+        setShowSeletedOnly(false);
+        setSelectedItems([]);
+        props.onSelectItems([]);
     }
 
     const handleToggleShowSelectedOny = (e) => {
@@ -30,6 +37,7 @@ function ListItemsSelector(props) {
         <Box sx={{ h: props.height, overflow: 'hidden' }}>
             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                 <OutlinedInput
+                    dense
                     fullWidth
                     id="search"
                     value={searchQuery}
@@ -46,8 +54,8 @@ function ListItemsSelector(props) {
                 />
             </FormControl>
             <div>
-                <FormControlLabel control={<Switch onChange={handleToggleShowSelectedOny} />} label="Show selected only" />
-                <Button onClick={() => setSelectedItems([])}>Clear all</Button>
+                <FormControlLabel control={<Switch onChange={handleToggleShowSelectedOny} checked={showSelectedOnly} />} label="Show selected only" />
+                <Button dense onClick={clearAll}>Clear all</Button>
             </div>
             <List sx={{ overflow: 'auto', height: props.height - 100 }}>
                 {(showSelectedOnly ? selectedItems : items).filter(f => f.indexOf(searchQuery) >= 0).map(item => {

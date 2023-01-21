@@ -10,6 +10,7 @@ const steps = ['List items component', 'Step 2', 'Step 3', 'Step 4', 'Step 5', '
 function App() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([steps[0]])
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -41,11 +42,12 @@ function App() {
                   <Button sx={{ width: 150 }} variant='outlined' disabled={step === 0} onClick={() => { setStep(step - 1); setLoading(true) }}>Prev</Button>
                 </Grid>
                 <Grid item xs>
-                  <Button sx={{ width: 150 }} variant='outlined' disabled={step === steps.length - 1} onClick={() => { setStep(step + 1); setLoading(true) }}>Next</Button>
+                  <Button sx={{ width: 150 }} variant='outlined' disabled={step === steps.length - 1 || selectedItems.length === 0} onClick={() => { setStep(step + 1); setLoading(true) }}>Next</Button>
                 </Grid>
               </Grid>
-              {step === 0 && <ListItemsSelector items={steps} height={300} />}
-              {step > 0 &&
+              {step === 0 && <ListItemsSelector items={steps} selectedItems={selectedItems} onSelectItems={setSelectedItems} height={500} />}
+              {step === 1 && <Typography sx={{ marginTop: 2 }} variant='subtitle1'>You selected:{selectedItems.join(",")}</Typography>}
+              {step > 1 &&
                 <Typography variant='subtitle1' sx={{ marginTop: 2 }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et quam rhoncus, consectetur tortor a, scelerisque neque. Pellentesque consequat, ligula sed ullamcorper lacinia, leo felis commodo nisi, nec ornare tellus mi non ipsum. Phasellus felis sapien, ultricies vel tortor faucibus, egestas dignissim ante. Cras id metus a lorem semper auctor. Phasellus vitae magna arcu. Pellentesque rhoncus ultricies nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempor metus quis dolor consequat egestas. Nam egestas felis vel magna hendrerit, consequat rhoncus augue viverra. In vitae imperdiet est. Quisque eleifend velit et tristique ultricies.
                 </Typography>
